@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:05:10 by mperrine          #+#    #+#             */
-/*   Updated: 2025/11/06 17:11:43 by mperrine         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:34:43 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,12 @@ int	buffer_update(char **buffer, char **read_str, const int read_res)
 	buffer_len = ft_strlen(*buffer);
 	tmp = malloc(sizeof(char) * (buffer_len + 1));
 	if (!tmp)
-	{
-		free(*buffer);
-		*buffer = NULL;
 		return (0);
-	}
 	ft_strmove(&tmp, buffer, 0, buffer_len);
 	*buffer = malloc(sizeof(char) * (buffer_len + read_res + 1));
 	if (!(*buffer))
 	{
-		*buffer = NULL;
-		free(tmp);
+		free_memory(&tmp);
 		return (0);
 	}
 	ft_strmove(buffer, &tmp, 0, ft_strlen(tmp));
@@ -78,7 +73,7 @@ int	check_linebreak(const char *str, int *break_pos, const int read_res)
 	}
 	if (str[i] == '\0' && read_res < BUFFER_SIZE)
 	{
-		*break_pos = i + 1;
+		*break_pos = i;
 		return (1);
 	}
 	*break_pos = 0;
@@ -95,24 +90,15 @@ int	clean_buffer(char **buffer, const char *str)
 	clean_buffer_size = buffer_size - ft_strlen(str);
 	tmp = malloc(sizeof(char) * (clean_buffer_size + 1));
 	if (!tmp)
-	{
-		free(*buffer);
-		*buffer = NULL;
 		return (0);
-	}
 	tmp[clean_buffer_size] = '\0';
 	while (clean_buffer_size > 0 && buffer_size > 0)
-	{
-		tmp[clean_buffer_size - 1] = (*buffer)[buffer_size - 1];
-		clean_buffer_size--;
-		buffer_size--;
-	}
+		tmp[clean_buffer_size-- - 1] = (*buffer)[buffer_size-- - 1];
 	free(*buffer);
 	*buffer = malloc(sizeof(char) * (ft_strlen(tmp) + 1));
 	if (!*buffer)
 	{
-		*buffer = NULL;
-		free(tmp);
+		free_memory(&tmp);
 		return (0);
 	}
 	ft_strmove(buffer, &tmp, 0, ft_strlen(tmp));
