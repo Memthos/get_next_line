@@ -6,12 +6,12 @@
 /*   By: mperrine <mperrine@student.42angouleme.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:05:36 by mperrine          #+#    #+#             */
-/*   Updated: 2025/11/13 11:07:47 by mperrine         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:07:35 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>

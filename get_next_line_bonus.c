@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:04:35 by mperrine          #+#    #+#             */
-/*   Updated: 2025/11/13 11:07:45 by mperrine         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:07:30 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,24 @@ int	init_buffer(char **buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer = NULL;
+	static char	*buffer[1024];
 	char		*str;
 	int			break_pos;
 	int			read_res;
 
 	if (fd < 0 || fd > 1023 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (!init_buffer(&buffer))
+	if (!init_buffer(&buffer[fd]))
 		return (NULL);
 	while (1)
 	{
-		if (!read_more(fd, &buffer, &read_res))
+		if (!read_more(fd, &buffer[fd], &read_res))
 			return (NULL);
-		if (check_linebreak(buffer, &break_pos, read_res))
+		if (check_linebreak(buffer[fd], &break_pos, read_res))
 		{
-			if (!get_line(&str, &buffer, break_pos))
+			if (!get_line(&str, &buffer[fd], break_pos))
 			{
-				free_memory(&buffer);
+				free_memory(&buffer[fd]);
 				return (NULL);
 			}
 			break ;
