@@ -23,7 +23,7 @@ or
 Basic usage:
 ```c
 char *line;
-int fd;
+int  fd;
 
 fd = open("file.txt", O_RDONLY);
 line = line = get_next_line(fd);
