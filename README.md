@@ -15,16 +15,23 @@ Include the header in your C file:
 ```c
 #include "get_next_line.h"
 ```
+or
+```c
+#include "get_next_line_bonus.h"
+```
 
 Basic usage:
 ```c
-int fd = open("file.txt", O_RDONLY);
 char *line;
+int fd;
 
-while ((line = get_next_line(fd)) != NULL)
+fd = open("file.txt", O_RDONLY);
+line = line = get_next_line(fd);
+while (line)
 {
     printf("%s", line);
     free(line);
+    line = line = get_next_line(fd);
 }
 close(fd);
 ```
